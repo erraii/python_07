@@ -49,7 +49,7 @@ class HealingCreatureFactory(CreatureFactory):
 class TransformCapability(abc.ABC):
 
     def __init__(self) -> None:
-        self._state = "base"
+        self._state = "normal"
 
     @abc.abstractmethod
     def transform(self) -> str:
@@ -63,28 +63,54 @@ class TransformCapability(abc.ABC):
 class Shiftling(Creature, TransformCapability):
 
     def __init__(self) -> None:
-        self._name = "Flameling"
-        self._type = "Fire"
+        TransformCapability.__init__(self)
+        self._name = "Shiftling"
+        self._type = "Normal"
 
     def attack(self) -> str:
-        return (f"{self._name} uses Ember!")
+        if self._state == "normal":
+            return (f"{self._name} attacks normally.")
+        else:
+            return (f"{self._name} performs a boosted strike!")
+
+    def transform(self) -> str:
+        if self._state == "normal":
+            self._state = "sharper"
+        return (f"{self._name} shifts into a sharper form!")
+
+    def revert(self) -> str:
+        if self._state == "sharper":
+            self._state = "normal"
+        return (f"{self._name} returns to normal.")
 
 
 class Morphagon(Creature, TransformCapability):
 
     def __init__(self) -> None:
-        self._name = "Pyrodon"
-        self._type = "Fire/Flying"
+        TransformCapability.__init__(self)
+        self._name = "Morphagon"
+        self._type = "Normal/Dragon"
 
     def attack(self) -> str:
-        return (f"{self._name} uses Flamethrower!")
+        if self._state == "normal":
+            return (f"{self._name} attacks normally.")
+        else:
+            return (f"{self._name} unleashes a devastating morph strike!")
+
+    def transform(self) -> str:
+        if self._state == "normal":
+            self._state = "dragonic battle"
+        return (f"{self._name} morphs into a dragonic battle form!")
+
+    def revert(self) -> str:
+        if self._state == "dragonic battle":
+            self._state = "normal"
+        return (f"{self._name} stabilizes its form.")
 
 
 class TransformCreatureFactory(CreatureFactory):
-    @abc.abstractmethod
-    def create_base(self) -> Creature:
-        pass
+    def create_base(self) -> Shiftling:
+        return Shiftling()
 
-    @abc.abstractmethod
-    def create_evolved(self) -> Creature:
-        pass
+    def create_evolved(self) -> Morphagon:
+        return Morphagon()
