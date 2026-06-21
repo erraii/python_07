@@ -1,6 +1,5 @@
 import abc
-from ex0.creature_factory import Creature
-from ex0.creature_factory import CreatureFactory
+from ex0.creature_factory import Creature, CreatureFactory
 
 
 # Abstract Healing Capability
@@ -14,8 +13,7 @@ class HealCapability(abc.ABC):
 class Sproutling(Creature, HealCapability):
 
     def __init__(self) -> None:
-        self._name = "Sproutling"
-        self._type = "Grass"
+        Creature.__init__(self, "Sproutling", "Grass")
 
     def attack(self) -> str:
         return (f"{self._name} uses Vine Whip!")
@@ -27,8 +25,7 @@ class Sproutling(Creature, HealCapability):
 class Bloomelle(Creature, HealCapability):
 
     def __init__(self) -> None:
-        self._name = "Bloomelle"
-        self._type = "Grass/Fairy"
+        Creature.__init__(self, "Bloomelle", "Grass/Fairy")
 
     def attack(self) -> str:
         return (f"{self._name} uses Petal Dance!")
@@ -38,10 +35,10 @@ class Bloomelle(Creature, HealCapability):
 
 
 class HealingCreatureFactory(CreatureFactory):
-    def create_base(self) -> Sproutling:
+    def create_base(self) -> Creature:
         return Sproutling()
 
-    def create_evolved(self) -> Bloomelle:
+    def create_evolved(self) -> Creature:
         return Bloomelle()
 
 
@@ -63,9 +60,8 @@ class TransformCapability(abc.ABC):
 class Shiftling(Creature, TransformCapability):
 
     def __init__(self) -> None:
+        Creature.__init__(self, "Shiftling", "Normal")
         TransformCapability.__init__(self)
-        self._name = "Shiftling"
-        self._type = "Normal"
 
     def attack(self) -> str:
         if self._state == "normal":
@@ -87,9 +83,8 @@ class Shiftling(Creature, TransformCapability):
 class Morphagon(Creature, TransformCapability):
 
     def __init__(self) -> None:
+        Creature.__init__(self, "Morphagon", "Normal/Dragon")
         TransformCapability.__init__(self)
-        self._name = "Morphagon"
-        self._type = "Normal/Dragon"
 
     def attack(self) -> str:
         if self._state == "normal":
@@ -109,8 +104,8 @@ class Morphagon(Creature, TransformCapability):
 
 
 class TransformCreatureFactory(CreatureFactory):
-    def create_base(self) -> Shiftling:
+    def create_base(self) -> Creature:
         return Shiftling()
 
-    def create_evolved(self) -> Morphagon:
+    def create_evolved(self) -> Creature:
         return Morphagon()
