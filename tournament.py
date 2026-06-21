@@ -5,11 +5,15 @@ import ex2
 
 def battle(opponents: list[tuple[ex2.CreatureFactory,
                                  ex2.BattleStrategy]]) -> None:
-    base_opponents = []
-    for opponent in opponents:
-        base_opponent = opponent[0].create_base()
-        base_opponents.append(base_opponent)
-        base_opponent.describe()
+
+    for i in range(len(opponents)):
+      for j in range(i + 1, len(opponents)):
+        opponent1 = opponents[i][0].create_base()
+        opponent2 = opponents[j][0].create_base()
+        opponent1.describe()
+        opponent2.describe()
+        opponent1_strategy = opponents[i][1]
+        opponent2_strategy = opponents[j][1]
 
 
 def main() -> None:
