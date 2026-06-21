@@ -4,9 +4,9 @@ import abc
 # Abstract Creatures
 class Creature(abc.ABC):
 
-    def __init__(self) -> None:
-        self._name = ""
-        self._type = ""
+    def __init__(self, name: str, type: str) -> None:
+        self._name = name
+        self._type = type
 
     @abc.abstractmethod
     def attack(self) -> str:
@@ -19,8 +19,7 @@ class Creature(abc.ABC):
 class Flameling(Creature):
 
     def __init__(self) -> None:
-        self._name = "Flameling"
-        self._type = "Fire"
+        super().__init__("Flameling", "Fire")
 
     def attack(self) -> str:
         return (f"{self._name} uses Ember!")
@@ -29,8 +28,7 @@ class Flameling(Creature):
 class Pyrodon(Creature):
 
     def __init__(self) -> None:
-        self._name = "Pyrodon"
-        self._type = "Fire/Flying"
+        super().__init__("Pyrodon", "Fire/Flying")
 
     def attack(self) -> str:
         return (f"{self._name} uses Flamethrower!")
@@ -39,8 +37,7 @@ class Pyrodon(Creature):
 class Aquabub(Creature):
 
     def __init__(self) -> None:
-        self._name = "Aquabub"
-        self._type = "Water"
+        super().__init__("Aquabub", "Water")
 
     def attack(self) -> str:
         return (f"{self._name} uses Water Gun!")
@@ -49,8 +46,7 @@ class Aquabub(Creature):
 class Torragon(Creature):
 
     def __init__(self) -> None:
-        self._name = "Torragon"
-        self._type = "Water"
+        super().__init__("Torragon", "Water")
 
     def attack(self) -> str:
         return (f"{self._name} uses Hydro Pump!")
@@ -67,7 +63,7 @@ class CreatureFactory(abc.ABC):
 
 
 class FlameFactory(CreatureFactory):
-    def create_base(self) -> Flameling:
+    def create_base(self) -> Creature:
         return Flameling()
 
     def create_evolved(self) -> Pyrodon:
@@ -75,7 +71,7 @@ class FlameFactory(CreatureFactory):
 
 
 class AquaFactory(CreatureFactory):
-    def create_base(self) -> Aquabub:
+    def create_base(self) -> Creature:
         return Aquabub()
 
     def create_evolved(self) -> Torragon:
