@@ -13,10 +13,10 @@ from ex1.transform_creature_factory import (
 class BattleStrategy(abc.ABC):
 
     @abc.abstractmethod
-    def act(self) -> str:
+    def act(self, creature: Creature) -> str:
         pass
 
-    def is_valid(self) -> bool:
+    def is_valid(self, creature: Creature) -> bool:
         pass
 
 
@@ -37,14 +37,14 @@ class NormalStrategy(BattleStrategy):
 
 class AggressiveStrategy(BattleStrategy):
 
-    def act(self, capability: HealCapability) -> str:
-        if self.is_valid(capability):
+    def act(self, creature: Creature) -> str:
+        if self.is_valid(creature):
             return capability.attack()
         else:
             raise Exception("Invalid Strategy-Creature combination!")
 
-    def is_valid(self, capability: HealCapability) -> bool:
-        if isinstance(capability, HealCapability):
+    def is_valid(self, creature: Creature) -> bool:
+        if isinstance(creature, TransformCapability):
             return True
         else:
             return False
@@ -52,14 +52,14 @@ class AggressiveStrategy(BattleStrategy):
 
 class DefensiveStrategy(BattleStrategy):
 
-    def act(self, capability: TransformCapability) -> str:
+    def act(self, creature: Creature) -> str:
         if self.is_valid(capability):
             return capability.attack()
         else:
             raise Exception("Invalid Strategy-Creature combination!")
 
-    def is_valid(self, capability: TransformCapability) -> bool:
-        if isinstance(capability, TransformCapability):
+    def is_valid(self, creature: Creature) -> bool:
+        if isinstance(creature: Creature):
             return True
         else:
             return False
