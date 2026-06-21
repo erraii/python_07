@@ -1,4 +1,5 @@
 from ex2.battle_strategy import (
+    BattleStrategy,
     NormalStrategy,
     AggressiveStrategy,
     DefensiveStrategy,
@@ -6,6 +7,7 @@ from ex2.battle_strategy import (
 
 
 __all__ = [
+    "BattleStrategy",
     "NormalStrategy",
     "AggressiveStrategy",
     "DefensiveStrategy",
