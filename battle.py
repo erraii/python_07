@@ -1,8 +1,7 @@
 import ex0
 
 
-def verify_Creature(Factory: type[ex0.FlameFactory]
-                    | type[ex0.AquaFactory]) -> None:
+def verify_Creature(Factory: CreatureFactory) -> None:
     factory = Factory()
     base_creature = factory.create_base()
     print(base_creature.describe())
@@ -13,8 +12,8 @@ def verify_Creature(Factory: type[ex0.FlameFactory]
     print(evolved_creature.attack())
 
 
-def fight_Creature(Factory1: type[ex0.FlameFactory],
-                   Factory2: type[ex0.AquaFactory]) -> None:
+def fight_Creature(Factory1: CreatureFactory,
+                   Factory2: CreatureFactory) -> None:
     factory1 = Factory1()
     factory2 = Factory2()
     base_creature1 = factory1.create_base()
