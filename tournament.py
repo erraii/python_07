@@ -3,56 +3,65 @@ import ex1
 import ex2
 
 
-def battle(opponents: list[tuple[ex2.CreatureFactory,
+def battle(opponents: list[tuple[ex0.CreatureFactory,
                                  ex2.BattleStrategy]]) -> None:
 
-    for i in range(len(opponents)):
-      for j in range(i + 1, len(opponents)):
-        opponent1 = opponents[i][0].create_base()
-        opponent2 = opponents[j][0].create_base()
-        opponent1.describe()
-        opponent2.describe()
-        opponent1_strategy = opponents[i][1]
-        opponent2_strategy = opponents[j][1]
+    print("*** Tournament ***")
+    total_opponents = len(opponents)
+    print(f"{total_opponents} opponents involved")
+    for i in range(total_opponents):
+        for j in range(i + 1, total_opponents):
+            print("\n* Battle *")
+            opponent1 = opponents[i][0].create_base()
+            opponent2 = opponents[j][0].create_base()
+            print(opponent1.describe())
+            print(" vs.")
+            print(opponent2.describe())
+            print(" now fight!")
+            opponent1_strategy = opponents[i][1]
+            opponent2_strategy = opponents[j][1]
+            try:
+                opponent1_strategy.act(opponent1)
+                opponent2_strategy.act(opponent2)
+            except ex2.InvalidStrategyError as e:
+                print(f"Battle error, aborting tournament: {e}")
+                return
 
 
 def main() -> None:
 
     print("Tournament 0 (basic)")
+    print(" [ (Flameling+Normal), (Healing+Defensive) ]")
     factory_flame = ex0.FlameFactory()
     normal_strategy = ex2.NormalStrategy()
-    factory_flame = ex0.FlameFactory()
-    normal_strategy = ex2.NormalStrategy()
-    tournament0 = [(factory_flame, normal_strategy),()]
-    battle(factory_flame, normal_strategy)
-    factory_heal = ex1.HealingCreatureFactory()
-    base_heal = factory_heal.create_base()
+    factory_healing = ex1.HealingCreatureFactory()
     defensive_strategy = ex2.DefensiveStrategy()
-    print(base_creature1.describe())
-    print(base_creature1.attack())
-    print(base_creature1.heal("itself"))
-    print(" evolved:")
-    evolved_creature1 = factoryHeal.create_evolved()
-    print(evolved_creature1.describe())
-    print(evolved_creature1.attack())
-    print(evolved_creature1.heal("itself and others"))
+    tournament0 = [(factory_flame, normal_strategy),
+                   (factory_healing, defensive_strategy)]
+    battle(tournament0)
 
-    print("\nTesting Creature with healing capability")
-    print(" base:")
-    factoryTrans = ex1.TransformCreatureFactory()
-    base_creature2 = factoryTrans.create_base()
-    print(base_creature2.describe())
-    print(base_creature2.attack())
-    print(base_creature2.transform())
-    print(base_creature2.attack())
-    print(base_creature2.revert())
-    print(" evolved:")
-    evolved_creature2 = factoryTrans.create_evolved()
-    print(evolved_creature2.describe())
-    print(evolved_creature2.attack())
-    print(evolved_creature2.transform())
-    print(evolved_creature2.attack())
-    print(evolved_creature2.revert())
+    print("\nTournament 1 (error)")
+    print(" [ (Flameling+Aggressive), (Healing+Defensive) ]")
+    factory_flame = ex0.FlameFactory()
+    aggressive_strategy = ex2.AggressiveStrategy()
+    factory_healing = ex1.HealingCreatureFactory()
+    defensive_strategy = ex2.DefensiveStrategy()
+    tournament1 = [(factory_flame, aggressive_strategy),
+                   (factory_healing, defensive_strategy)]
+    battle(tournament1)
+
+    print("\nTournament 2 (multiple)")
+    print(" [ (Aquabub+Normal), (Healing+Defensive), (Transform+Aggressive) ]")
+    factory_aqua = ex0.AquaFactory()
+    normal_strategy = ex2.NormalStrategy()
+    factory_healing = ex1.HealingCreatureFactory()
+    defensive_strategy = ex2.DefensiveStrategy()
+    factory_transform = ex1.TransformCreatureFactory()
+    aggressive_strategy = ex2.AggressiveStrategy()
+    tournament2 = [(factory_aqua, normal_strategy),
+                   (factory_healing, defensive_strategy),
+                   (factory_transform, aggressive_strategy)]
+    battle(tournament2)
 
 
 if __name__ == "__main__":
