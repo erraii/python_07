@@ -4,9 +4,9 @@ import abc
 # Abstract Creatures
 class Creature(abc.ABC):
 
-    def __init__(self, name: str, type: str) -> None:
+    def __init__(self, name: str, type_: str) -> None:
         self._name = name
-        self._type = type
+        self._type = type_
 
     @abc.abstractmethod
     def attack(self) -> str:
@@ -66,7 +66,7 @@ class FlameFactory(CreatureFactory):
     def create_base(self) -> Creature:
         return Flameling()
 
-    def create_evolved(self) -> Pyrodon:
+    def create_evolved(self) -> Creature:
         return Pyrodon()
 
 
@@ -74,5 +74,5 @@ class AquaFactory(CreatureFactory):
     def create_base(self) -> Creature:
         return Aquabub()
 
-    def create_evolved(self) -> Torragon:
+    def create_evolved(self) -> Creature:
         return Torragon()
