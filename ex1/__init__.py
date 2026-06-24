@@ -1,4 +1,4 @@
-from .transform_creature_factory import (
+from .creature_capability_factory import (
     HealingCreatureFactory,
     TransformCreatureFactory,
 )
